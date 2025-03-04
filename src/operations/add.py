@@ -11,7 +11,7 @@ app = typer.Typer(no_args_is_help=True, rich_markup_mode="rich")
 @app.command()
 def add(task: Annotated[Optional[List[str]], typer.Argument(help="Enter task")], ):
     """
-        Create a new task.
+        Create new task.
     """
     node = Task(" ".join(task))
     with open("db.json", "r") as JSONfile:
