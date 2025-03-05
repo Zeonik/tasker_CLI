@@ -3,7 +3,7 @@ import json
 from typing import List, Optional
 
 from typing_extensions import Annotated
-from task import Task
+from task import add_task
 
 app = typer.Typer(no_args_is_help=True, rich_markup_mode="rich")
 
@@ -13,9 +13,9 @@ def add(task: Annotated[Optional[List[str]], typer.Argument(help="Enter task")],
     """
         Create new task.
     """
-    node = Task(" ".join(task))
+    node = add_task(" ".join(task))
     with open("db.json", "r") as JSONfile:
         loaded = json.load(JSONfile)
-        loaded.append(node.getObj())
+        loaded.append(node)
     with open("db.json", "w") as JSONfile:
         json.dump(loaded, JSONfile, indent=4)

@@ -2,7 +2,7 @@ import typer
 import json
 from typing import List, Optional
 from typing_extensions import Annotated
-from task import Task
+from datetime import datetime
 
 app = typer.Typer(no_args_is_help=True, rich_markup_mode="rich")
 
@@ -13,11 +13,11 @@ def update(taskid: Annotated[int, typer.Argument(help="Task ID")],
     """
            Update task.
     """
-    updated = Task(" ".join(task))
-    updated.id = taskid
+    newtext = " ".join(task)
+
     with open("db.json", "r") as JSONfile:
         loaded = json.load(JSONfile)
-        result = [item for item in loaded if item["id"] != taskid]
-        result.append(updated.getObj())
+        updatedlist = [{**task, "text": newtext,"updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S")} if task["id"] == taskid else task for task in loaded]
+
     with open("db.json", "w") as JSONfile:
-        json.dump(result, JSONfile, indent=4)
+        json.dump(updatedlist, JSONfile, indent=4)
