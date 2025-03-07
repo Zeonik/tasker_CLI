@@ -1,6 +1,5 @@
 import typer
 import json
-from typing import List, Optional
 from typing_extensions import Annotated
 from datetime import datetime
 

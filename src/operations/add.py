@@ -14,8 +14,13 @@ def add(task: Annotated[Optional[List[str]], typer.Argument(help="Enter task")],
         Create new task.
     """
     node = add_task(" ".join(task))
-    with open("db.json", "r") as JSONfile:
-        loaded = json.load(JSONfile)
-        loaded.append(node)
-    with open("db.json", "w") as JSONfile:
-        json.dump(loaded, JSONfile, indent=4)
+    try :
+        with open("db.json", "r") as JSONfile:
+            loaded = json.load(JSONfile)
+            loaded.append(node)
+        with open("db.json", "w") as JSONfile:
+            json.dump(loaded, JSONfile, indent=4)
+
+    except json.JSONDecodeError as err:
+        print(f"Invalid JSON file format: {err}")
+

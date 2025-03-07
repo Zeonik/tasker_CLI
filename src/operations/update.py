@@ -17,7 +17,7 @@ def update(taskid: Annotated[int, typer.Argument(help="Task ID")],
 
     with open("db.json", "r") as JSONfile:
         loaded = json.load(JSONfile)
-        updatedlist = [{**task, "text": newtext,"updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S")} if task["id"] == taskid else task for task in loaded]
+        updatedlist = [{**task, "description": newtext,"updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S")} if task["id"] == taskid else task for task in loaded]
 
     with open("db.json", "w") as JSONfile:
         json.dump(updatedlist, JSONfile, indent=4)
