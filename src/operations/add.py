@@ -20,7 +20,7 @@ def add(task: Annotated[Optional[List[str]], typer.Argument(help="Enter task")],
             loaded.append(node)
         with open("db.json", "w") as JSONfile:
             json.dump(loaded, JSONfile, indent=4)
+        print("New task added with ID:"+str(node["id"]))
 
     except json.JSONDecodeError as err:
         print(f"Invalid JSON file format: {err}")
-

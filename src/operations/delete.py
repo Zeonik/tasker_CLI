@@ -10,8 +10,13 @@ def delete(taskid: Annotated[int, typer.Argument(help="Delete task")], ):
     """
            Delete task.
     """
-    with open("db.json", "r") as JSONfile:
-        loaded = json.load(JSONfile)
-        result = [item for item in loaded if item["id"] != taskid]
-    with open("db.json", "w") as JSONfile:
-        json.dump(result, JSONfile, indent=4)
+    try:
+        with open("db.json", "r") as JSONfile:
+            loaded = json.load(JSONfile)
+            result = [item for item in loaded if item["id"] != taskid]
+        with open("db.json", "w") as JSONfile:
+            json.dump(result, JSONfile, indent=4)
+
+        print("Deleted task with ID:" + str(taskid))
+    except json.JSONDecodeError as err:
+        print(f"Invalid JSON file format: {err}")
